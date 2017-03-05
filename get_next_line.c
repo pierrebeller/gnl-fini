@@ -13,21 +13,17 @@
 #include "get_next_line.h"
 #include "libft/libft.h"
 
-int	ft_end(char **line, char *buff)
-{
-	*line = ft_strjoinfree(*line, buff, 'l');
-	return (1);
-}
-
 int	stock_gestion(int fd, char **stock, char **line)
 {
 	int		len;
+	int		ret;
 
-	*line = ft_strdup("");
 	if (ft_strchr(stock[fd], '\n') == NULL)
 	{
-		*line = ft_strjoinfree(*line, stock[fd], 'r');
-		return (fill_buff(fd, stock, line));
+		*line = ft_strjoin(*line, stock[fd]);
+		stock[fd] = 0;
+		ret = fill_buff(fd, stock, line);
+		return (ret);
 	}
 	else
 	{
@@ -45,16 +41,13 @@ int	fill_buff(int fd, char **stock, char **line)
 	int		len;
 	char	buff[BUFF_SIZE + 1];
 
-	*line = ft_strdup("");
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		if (ret < 0)
 			return (-1);
 		buff[ret] = 0;
-		if (ft_strchr(buff, '\n') == NULL && ret == BUFF_SIZE)
+		if (ft_strchr(buff, '\n') == NULL)
 			*line = ft_strjoinfree(*line, buff, 'l');
-		else if (ft_strchr(buff, '\n') == NULL && ret < BUFF_SIZE)
-			return (ft_end(line, buff));
 		else if (ft_strchr(buff, '\n'))
 		{
 			len = ft_strchr(buff, '\n') - buff;
@@ -63,7 +56,7 @@ int	fill_buff(int fd, char **stock, char **line)
 			return (1);
 		}
 	}
-	return (ret);
+	return (**line ? 1 : ret);
 }
 
 int	get_next_line(int fd, char **line)
@@ -75,13 +68,15 @@ int	get_next_line(int fd, char **line)
 		return (-1);
 	if (!stock[fd])
 	{
+		*line = ft_strdup("");
 		ret = fill_buff(fd, stock, line);
-		return (ret != 0 ? ret : 0);
+		return (ret);
 	}
 	else
 	{
+		*line = ft_strdup("");
 		ret = stock_gestion(fd, stock, line);
-		return (ret != 0 ? ret : 0);
+		return (ret);
 	}
 	return (ret);
 }
