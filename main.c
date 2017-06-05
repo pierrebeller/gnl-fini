@@ -45,7 +45,23 @@ int		main(int ac, char **av)
 	ft_putchar('\n');*/
 	//printf("line %s\n", line);
 	//printf("ret %d\n", ret);
-	printf("retour de GNL : %d\n", get_next_line(fd1, &line));
+	get_next_line(10000, &line);
+	free(line);
+	get_next_line(fd2, &line);
+	free(line);
+	get_next_line(fd1, &line);
+	free(line);
+	get_next_line(fd2, &line);
+	free(line);
+	get_next_line(fd1, &line);
+	free(line);
+	get_next_line(fd2, &line);
+	free(line);
+	get_next_line(fd1, &line);
+	free(line);
+	get_next_line(fd2, &line);
+	free(line);
+	/*printf("retour de GNL : %d\n", get_next_line(fd1, &line));
 	printf("1er fichier, 1ere ligne : %s\n", line);
 	printf("retour de GNL : %d\n", get_next_line(fd2, &line));
 	printf("2e fichier, 1ere ligne : %s\n", line);
@@ -60,7 +76,6 @@ int		main(int ac, char **av)
 	printf("retour de GNL : %d\n", get_next_line(fd1, &line));
 	printf("1er fichier, 4e ligne : %s\n", line);
 	printf("retour de GNL : %d\n", get_next_line(fd2, &line));
-	printf("2e fichier, 4e ligne : %s\n", line);
-	free(line);
+	printf("2e fichier, 4e ligne : %s\n", line);*/
 	return (0);
 }
